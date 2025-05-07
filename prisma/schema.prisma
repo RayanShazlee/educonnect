@@ -1,0 +1,187 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
+  MENTOR
+  INSTITUTION
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  role          UserRole
+  bio           String?
+  avatar        String?
+  education     String?
+  skills        String[]
+  interests     String[]
+  experience    WorkExperience[]
+  resumes       Resume[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  posts         Post[]
+  comments      Comment[]
+  communities   CommunityMember[]
+  badges        UserBadge[]
+  resources     Resource[]
+  messages      Message[]
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  title       String
+  content     String
+  mediaUrls   String[]
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id])
+  comments    Comment[]
+  likes       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Community {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String
+  category    String
+  members     CommunityMember[]
+  resources   Resource[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model CommunityMember {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  communityId String
+  community   Community @relation(fields: [communityId], references: [id])
+  role        String    @default("MEMBER")
+  joinedAt    DateTime  @default(now())
+
+  @@unique([userId, communityId])
+}
+
+model Badge {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  description String
+  category    String
+  tier        String
+  iconUrl     String
+  criteria    String
+  users       UserBadge[]
+  createdAt   DateTime    @default(now())
+}
+
+model UserBadge {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  badgeId   String
+  badge     Badge    @relation(fields: [badgeId], references: [id])
+  earnedAt  DateTime @default(now())
+
+  @@unique([userId, badgeId])
+}
+
+model Resource {
+  id          String    @id @default(cuid())
+  title       String
+  type        String
+  url         String
+  description String?
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id])
+  communityId String
+  community   Community @relation(fields: [communityId], references: [id])
+  tags        String[]
+  rating      Float     @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Message {
+  id          String   @id @default(cuid())
+  content     String
+  senderId    String
+  sender      User     @relation(fields: [senderId], references: [id])
+  receiverId  String
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model WorkExperience {
+  id          String   @id @default(cuid())
+  title       String
+  company     String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean  @default(false)
+  description String?
+  skills      String[]
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  resumes     Resume[] @relation("ResumeExperience")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Resume {
+  id          String           @id @default(cuid())
+  title       String
+  objective   String?
+  userId      String
+  user        User             @relation(fields: [userId], references: [id])
+  experience  WorkExperience[] @relation("ResumeExperience")
+  skills      String[]
+  education   Education[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Education {
+  id          String    @id @default(cuid())
+  school      String
+  degree      String
+  field       String
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean   @default(false)
+  gpa         Float?
+  resumeId    String
+  resume      Resume    @relation(fields: [resumeId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

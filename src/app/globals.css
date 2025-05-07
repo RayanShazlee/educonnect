@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+  :root {
+  --retro-bg: rgb(42,54,59);
+  --retro-primary: rgb(69,183,175);
+  --retro-accent: rgb(255,107,107);
+  --retro-text: rgb(247,247,247);
+  --retro-white: rgb(255,255,255);
+  --retro-black: rgb(0,0,0);
+  --retro-grid-size: 40px;
+  --retro-scanline-size: 2px;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-[var(--retro-text)] font-vt323;
+    background-color: var(--retro-bg);
+    background-image: 
+      /* Scanlines */
+      repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) var(--retro-scanline-size),
+        transparent var(--retro-scanline-size),
+        transparent calc(var(--retro-scanline-size) * 2)
+      ),
+      /* Grid Pattern */
+      linear-gradient(
+        to right,
+        rgba(69,183,175, 0.1) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(69,183,175, 0.1) 1px,
+        transparent 1px
+      ),
+      /* Radial Gradient for CRT effect */
+      radial-gradient(
+        circle at center,
+        rgba(42,54,59, 0.8) 0%,
+        rgba(33,44,48, 0.95) 100%
+      );
+    background-size: 
+      100% calc(var(--retro-scanline-size) * 2),
+      var(--retro-grid-size) var(--retro-grid-size),
+      var(--retro-grid-size) var(--retro-grid-size),
+      100% 100%;
+    background-position: 0 0;
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  /* Base container for all major sections */
+  .retro-container {
+    @apply p-6 border-2 border-[var(--retro-primary)] rounded-lg bg-[var(--retro-bg)] shadow-lg;
+  }
+
+  /* Navigation bar */
+  .retro-nav {
+    @apply bg-[var(--retro-bg)] border-b-2 border-[var(--retro-primary)];
+  }
+
+  /* Primary buttons */
+  .retro-button {
+    @apply bg-[var(--retro-primary)] text-[var(--retro-bg)] px-4 py-2 rounded-md 
+    font-vt323 text-xl border-2 border-[var(--retro-primary)]
+    shadow-[4px_4px_0px_0px_var(--retro-primary)]
+    hover:bg-[var(--retro-accent)] hover:border-[var(--retro-accent)] hover:shadow-[2px_2px_0px_0px_var(--retro-accent)]
+    hover:translate-x-[2px] hover:translate-y-[2px]
+    transition-all duration-200;
+  }
+
+  /* Secondary buttons */
+  .retro-button-secondary {
+    @apply px-4 py-2 border-2 border-[var(--retro-primary)] text-[var(--retro-primary)] font-vt323 text-xl rounded-md 
+    hover:bg-[var(--retro-primary)] hover:text-[var(--retro-bg)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Input fields */
+  .retro-input {
+    @apply rounded-md border-2 border-[var(--retro-primary)] px-4 py-2 
+    bg-[var(--retro-bg)] text-[var(--retro-text)] opacity-95
+    focus:border-[var(--retro-accent)] focus:outline-none transition-colors;
+  }
+
+  .retro-input::placeholder {
+    @apply text-[var(--retro-text)] opacity-50;
+  }
+
+  /* Cards */
+  .retro-card {
+    @apply p-6 border-2 border-[var(--retro-primary)] rounded-lg bg-[var(--retro-bg)] hover:border-[var(--retro-accent)] transition-colors;
+  }
+
+  /* Links */
+  .retro-link {
+    @apply text-[var(--retro-text)] opacity-80 hover:text-[var(--retro-accent)] 
+    transition-colors font-vt323 text-xl;
+  }
+
+  /* Headers */
+  .retro-header {
+    @apply text-2xl font-bold font-press-start text-[var(--retro-text)] mb-4;
+  }
+
+  /* Subheaders */
+  .retro-subheader {
+    @apply text-xl font-vt323 text-[var(--retro-text)] opacity-90 mb-2;
+  }
+
+  /* List items */
+  .retro-list-item {
+    @apply bg-[var(--retro-bg)] border-2 border-[var(--retro-primary)] 
+    rounded-md p-4 mb-2 text-[var(--retro-text)]
+    hover:border-[var(--retro-accent)] transition-colors shadow-sm opacity-90;
+  }
+
+  /* Form groups */
+  .retro-form-group {
+    @apply bg-[var(--retro-bg)] rounded-lg border-2 border-[var(--retro-primary)] 
+    p-6 mb-4 text-[var(--retro-text)] shadow-md opacity-95;
+  }
+
+  /* Tables */
+  .retro-table {
+    @apply w-full bg-[var(--retro-bg)] border-2 border-[var(--retro-primary)] 
+    rounded-lg overflow-hidden text-[var(--retro-text)] shadow-md opacity-95;
+  }
+
+  .retro-table th {
+    @apply bg-[var(--retro-primary)] text-[var(--retro-bg)] px-4 py-2 text-left font-vt323;
+  }
+
+  .retro-table td {
+    @apply px-4 py-2 border-t border-[var(--retro-primary)] font-vt323;
+}
+
+  /* Badges */
+  .retro-badge {
+    @apply inline-block bg-[var(--retro-bg)] text-[var(--retro-text)]
+    border-2 border-[var(--retro-primary)] rounded-full px-3 py-1
+    text-sm font-vt323 shadow-sm opacity-90;
+}
+
+  /* Pixelated Icon */
+  .pixelated {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    filter: brightness(1.2) contrast(1.1);
+  }
+
+  .pixelated::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+  }
+
+  .pixelated::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 45%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 55%
+    );
+    background-size: 300% 300%;
+    animation: pixelShine 3s ease infinite;
+    pointer-events: none;
+  }
+
+  @keyframes pixelShine {
+    0% {
+      background-position: 100% 100%;
+    }
+    50% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 100% 100%;
+    }
+  }
+
+  /* Achievement card hover effects */
+  .retro-card:hover .pixelated {
+    animation: pixelPulse 0.5s ease infinite alternate;
+  }
+
+  @keyframes pixelPulse {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@layer utilities {
+  .font-press-start {
+    font-family: var(--font-press-start);
+}
+
+  .font-vt323 {
+    font-family: var(--font-vt323);
+  }
+}
