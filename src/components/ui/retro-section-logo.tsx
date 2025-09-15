@@ -330,8 +330,8 @@ export function RetroSectionLogo({
               className="absolute w-2 h-2 rounded-full"
               style={{
                 background: config.colors.accent,
-                [corner === 0 ? 'top' : corner === 1 ? 'top' : 'bottom']: '-4px',
-                [corner === 0 || corner === 3 ? 'left' : 'right']: '-4px'
+                [corner === 0 || corner === 1 ? 'top' : 'bottom']: '-4px',
+                [corner === 0 || corner === 2 ? 'left' : 'right']: '-4px'
               }}
               animate={particleAnimations.sparkle.animate}
               transition={{

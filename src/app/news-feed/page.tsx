@@ -24,9 +24,11 @@ import CreatePost from '@/components/news-feed/create-post';
 import NewsFeedSidebar from '@/components/news-feed/news-feed-sidebar';
 import { useDebounce } from '@/hooks/use-debounce';
 import { useAuth } from '@/lib/auth-context';
+import { useToast } from '@/hooks/use-toast';
 
 export default function NewsFeedPage() {
   const { user, isAuthenticated } = useAuth();
+  const { addToast } = useToast();
   const [posts, setPosts] = useState<Post[]>(mockPosts);
   const [filter, setFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,7 +40,7 @@ export default function NewsFeedPage() {
   
   // Memoize search results
   const searchResults = useMemo(() => {
-    return debouncedSearchQuery.trim() ? searchPosts(debouncedSearchQuery) : posts;
+    return debouncedSearchQuery.trim() ? searchPosts(posts, debouncedSearchQuery) : posts;
   }, [debouncedSearchQuery, posts]);
 
   const filters = [
@@ -128,6 +130,92 @@ export default function NewsFeedPage() {
       )
     );
   }, []);
+
+  const handleComment = useCallback(async (postId: string) => {
+    if (!isAuthenticated) {
+      addToast('Authentication Required', 'Please sign in to comment on posts', 'warning');
+      return;
+    }
+
+    try {
+      // Optimistic UI update - increment comment count
+      setPosts(prevPosts =>
+        prevPosts.map(post =>
+          post.id === postId
+            ? { ...post, comments: [...post.comments] } // Keep existing comments, in real app would add new comment
+            : post
+        )
+      );
+
+      // Simulate API call
+      const response = await new Promise<{ success: boolean }>((resolve) => {
+        setTimeout(() => {
+          // Simulate random success/failure for demo
+          resolve({ success: Math.random() > 0.1 }); // 90% success rate
+        }, 1000);
+      });
+
+      if (response.success) {
+        addToast('Comment Added', 'Your comment has been posted successfully', 'success');
+        // In a real app, you would add the actual comment here
+      } else {
+        throw new Error('Failed to post comment');
+      }
+    } catch (error) {
+      // Rollback UI on failure
+      setPosts(prevPosts =>
+        prevPosts.map(post =>
+          post.id === postId
+            ? { ...post, comments: post.comments } // Revert to original state
+            : post
+        )
+      );
+      addToast('Comment Failed', 'Failed to post your comment. Please try again.', 'error');
+    }
+  }, [isAuthenticated, addToast]);
+
+  const handleShare = useCallback(async (postId: string) => {
+    if (!isAuthenticated) {
+      addToast('Authentication Required', 'Please sign in to share posts', 'warning');
+      return;
+    }
+
+    try {
+      // Optimistic UI update - increment share count
+      setPosts(prevPosts =>
+        prevPosts.map(post =>
+          post.id === postId
+            ? { ...post, shares: (post.shares || 0) + 1 }
+            : post
+        )
+      );
+
+      // Simulate API call
+      const response = await new Promise<{ success: boolean }>((resolve) => {
+        setTimeout(() => {
+          // Simulate random success/failure for demo
+          resolve({ success: Math.random() > 0.1 }); // 90% success rate
+        }, 1000);
+      });
+
+      if (response.success) {
+        addToast('Post Shared', 'Post has been shared successfully', 'success');
+        // In a real app, you might also copy link to clipboard or open share dialog
+      } else {
+        throw new Error('Failed to share post');
+      }
+    } catch (error) {
+      // Rollback UI on failure
+      setPosts(prevPosts =>
+        prevPosts.map(post =>
+          post.id === postId
+            ? { ...post, shares: Math.max((post.shares || 0) - 1, 0) }
+            : post
+        )
+      );
+      addToast('Share Failed', 'Failed to share the post. Please try again.', 'error');
+    }
+  }, [isAuthenticated, addToast]);
 
   const handleRefresh = useCallback(() => {
     setIsRefreshing(true);
@@ -274,8 +362,8 @@ export default function NewsFeedPage() {
                     <PostCard
                       post={post}
                       onLike={handleLike}
-                      onComment={(postId) => console.log('Comment on', postId)}
-                      onShare={(postId) => console.log('Share', postId)}
+                      onComment={handleComment}
+                      onShare={handleShare}
                     />
                   </motion.div>
                 ))}
