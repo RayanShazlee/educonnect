@@ -38,3 +38,66 @@ export interface Resume {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface User {
+  id: string
+  name: string
+  email: string
+  avatar?: string
+  title?: string
+  bio?: string
+  role: 'STUDENT' | 'TEACHER' | 'MENTOR' | 'INSTITUTION'
+}
+
+export interface Post {
+  id: string
+  title?: string
+  content: string
+  mediaUrls?: string[]
+  author: User
+  likes: number
+  comments: PostComment[]
+  shares?: number
+  createdAt: Date
+  updatedAt: Date
+  type: 'text' | 'achievement' | 'course' | 'resource' | 'discussion' | 'announcement'
+  metadata?: {
+    achievement?: {
+      badgeName: string
+      badgeDescription: string
+      rarity: 'Common' | 'Rare' | 'Epic' | 'Legendary'
+    }
+    course?: {
+      courseId: string
+      courseTitle: string
+      duration: string
+      level: string
+      category: string
+    }
+    resource?: {
+      resourceTitle: string
+      resourceType: string
+      url?: string
+    }
+    tags?: string[]
+  }
+}
+
+export interface PostComment {
+  id: string
+  content: string
+  author: User
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface Community {
+  id: string
+  name: string
+  description: string
+  category: string
+  memberCount: number
+  emoji?: string
+  isPrivate: boolean
+  recentActivity?: string
+}

@@ -48,6 +48,7 @@ const NOTIFICATIONS = [
 
 const MENU_ITEMS = [
   { href: '/', label: 'Home' },
+  { href: '/news-feed', label: 'News Feed' },
   { href: '/courses', label: 'Courses' },
   { href: '/communities', label: 'Communities' },
   { href: '/achievements', label: 'Achievements' },

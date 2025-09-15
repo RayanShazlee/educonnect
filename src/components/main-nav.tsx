@@ -31,6 +31,14 @@ export function MainNav() {
 
           <nav className="hidden md:flex items-center gap-6">
             <Link
+              href="/news-feed"
+              className={`retro-button font-vt323 text-xl border-2 border-[var(--retro-primary)] shadow-[4px_4px_0px_0px_var(--retro-primary)] hover:shadow-[2px_2px_0px_0px_var(--retro-primary)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 ${
+                pathname === '/news-feed' ? 'bg-[var(--retro-accent)]' : ''
+              }`}
+            >
+              News Feed
+            </Link>
+            <Link
               href="/courses"
               className={`retro-button font-vt323 text-xl border-2 border-[var(--retro-primary)] shadow-[4px_4px_0px_0px_var(--retro-primary)] hover:shadow-[2px_2px_0px_0px_var(--retro-primary)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 ${
                 pathname === '/courses' ? 'bg-[var(--retro-accent)]' : ''
