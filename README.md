@@ -160,4 +160,4 @@ No seed script is included.
 
 ## License
 
-No license file is provided in this repository.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
