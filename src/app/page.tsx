@@ -240,6 +240,385 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Community Activity & Platform Highlights */}
+      <section className="py-12 bg-retro-bg/30">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-8"
+          >
+            <h2 className="font-press-start text-2xl text-retro-primary mb-3">
+              🏆 Platform Highlights
+            </h2>
+            <p className="font-vt323 text-lg text-retro-text/80 max-w-2xl mx-auto">
+              See what's happening across the EduConnect community - from latest achievements to popular courses
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Recent Community Posts */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+            >
+              <Card className="retro-card h-full">
+                <CardHeader className="pb-4">
+                  <CardTitle className="font-press-start text-lg text-retro-primary flex items-center gap-2">
+                    <MessageSquare className="w-5 h-5" />
+                    Latest Posts
+                  </CardTitle>
+                  <CardDescription className="font-vt323 text-retro-text/70">
+                    Hot discussions from the community
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {[
+                    {
+                      title: "React 18 Performance Tips",
+                      author: "Sarah Chen",
+                      community: "Web Development Hub",
+                      replies: 23,
+                      likes: 45,
+                      timeAgo: "2h ago",
+                      topic: "React"
+                    },
+                    {
+                      title: "ML Model Deployment Guide",
+                      author: "Alex Rodriguez",
+                      community: "AI/ML Enthusiasts",
+                      replies: 18,
+                      likes: 38,
+                      timeAgo: "4h ago",
+                      topic: "Machine Learning"
+                    },
+                    {
+                      title: "Career Switch to Tech",
+                      author: "Mike Thompson",
+                      community: "Career Advice",
+                      replies: 31,
+                      likes: 52,
+                      timeAgo: "6h ago",
+                      topic: "Career Advice"
+                    },
+                    {
+                      title: "Python Data Analysis Tips",
+                      author: "Emma Wilson",
+                      community: "Data Science",
+                      replies: 15,
+                      likes: 29,
+                      timeAgo: "8h ago",
+                      topic: "Python"
+                    }
+                  ].map((post, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + index * 0.1 }}
+                      className="p-3 rounded-lg bg-retro-bg/50 border border-retro-text/10 hover:border-retro-accent/30 transition-colors cursor-pointer group"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex-1">
+                          <div className="font-vt323 font-bold text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            {post.title}
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-retro-text/60">
+                            <span>by {post.author}</span>
+                            <span>•</span>
+                            <span>{post.community}</span>
+                          </div>
+                        </div>
+                        <RetroTopicIcon topic={post.topic} size="sm" />
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-3 text-retro-text/60">
+                          <span className="flex items-center gap-1">
+                            <MessageSquare className="w-3 h-3" />
+                            {post.replies}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Heart className="w-3 h-3" />
+                            {post.likes}
+                          </span>
+                        </div>
+                        <span className="text-retro-text/50">{post.timeAgo}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                  <Button variant="ghost" className="w-full font-vt323 text-sm hover:text-retro-primary mt-4">
+                    View All Posts <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Recent Achievements */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <Card className="retro-card h-full">
+                <CardHeader className="pb-4">
+                  <CardTitle className="font-press-start text-lg text-retro-primary flex items-center gap-2">
+                    <Trophy className="w-5 h-5" />
+                    Latest Achievements
+                  </CardTitle>
+                  <CardDescription className="font-vt323 text-retro-text/70">
+                    Recently unlocked by learners
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {[
+                    {
+                      name: "Algorithm Master",
+                      description: "Solved 100+ coding challenges",
+                      user: "Alex Chen",
+                      rarity: "Legendary" as const,
+                      timeAgo: "1h ago",
+                      xpEarned: 500
+                    },
+                    {
+                      name: "Code Mentor",
+                      description: "Helped 50+ community members",
+                      user: "Sarah Johnson",
+                      rarity: "Epic" as const,
+                      timeAgo: "3h ago",
+                      xpEarned: 300
+                    },
+                    {
+                      name: "React Specialist",
+                      description: "Completed React mastery course",
+                      user: "Mike Wilson",
+                      rarity: "Rare" as const,
+                      timeAgo: "5h ago",
+                      xpEarned: 200
+                    },
+                    {
+                      name: "First Steps",
+                      description: "Completed first programming course",
+                      user: "Emma Davis",
+                      rarity: "Common" as const,
+                      timeAgo: "7h ago",
+                      xpEarned: 50
+                    },
+                    {
+                      name: "Community Helper",
+                      description: "Made 25 helpful posts",
+                      user: "David Park",
+                      rarity: "Rare" as const,
+                      timeAgo: "9h ago",
+                      xpEarned: 150
+                    }
+                  ].map((achievement, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + index * 0.1 }}
+                      className="p-3 rounded-lg bg-retro-bg/50 border border-retro-text/10 hover:border-retro-accent/30 transition-colors cursor-pointer group"
+                    >
+                      <div className="flex items-start gap-3">
+                        <RetroAchievementIcon
+                          achievementName={achievement.name}
+                          rarity={achievement.rarity}
+                          size="sm"
+                        />
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="font-vt323 font-bold text-sm text-retro-text group-hover:text-retro-primary transition-colors">
+                              {achievement.name}
+                            </div>
+                            <Badge 
+                              variant="secondary" 
+                              className={`text-xs ${
+                                achievement.rarity === 'Legendary' ? 'bg-yellow-500/20 text-yellow-400' :
+                                achievement.rarity === 'Epic' ? 'bg-purple-500/20 text-purple-400' :
+                                achievement.rarity === 'Rare' ? 'bg-blue-500/20 text-blue-400' :
+                                'bg-gray-500/20 text-gray-400'
+                              }`}
+                            >
+                              {achievement.rarity}
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-retro-text/70 mb-2">
+                            {achievement.description}
+                          </div>
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-retro-text/60">
+                              Unlocked by <span className="font-semibold">{achievement.user}</span>
+                            </span>
+                            <div className="flex items-center gap-2 text-retro-text/50">
+                              <span className="text-retro-accent">+{achievement.xpEarned} XP</span>
+                              <span>•</span>
+                              <span>{achievement.timeAgo}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  <Button variant="ghost" className="w-full font-vt323 text-sm hover:text-retro-primary mt-4">
+                    View All Achievements <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Recently Completed Courses */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              <Card className="retro-card h-full">
+                <CardHeader className="pb-4">
+                  <CardTitle className="font-press-start text-lg text-retro-primary flex items-center gap-2">
+                    <BookOpen className="w-5 h-5" />
+                    Course Completions
+                  </CardTitle>
+                  <CardDescription className="font-vt323 text-retro-text/70">
+                    Latest course milestones
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {[
+                    {
+                      title: "Advanced React Patterns",
+                      student: "Alex Rodriguez",
+                      instructor: "Dr. Sarah Johnson",
+                      completionRate: 100,
+                      rating: 5,
+                      timeAgo: "2h ago",
+                      category: "Frontend",
+                      duration: "12 weeks"
+                    },
+                    {
+                      title: "Machine Learning Fundamentals",
+                      student: "Emma Chen",
+                      instructor: "Prof. Michael Zhang",
+                      completionRate: 95,
+                      rating: 4.8,
+                      timeAgo: "4h ago",
+                      category: "AI/ML",
+                      duration: "8 weeks"
+                    },
+                    {
+                      title: "Full-Stack Web Development",
+                      student: "John Smith",
+                      instructor: "Lisa Parker",
+                      completionRate: 88,
+                      rating: 4.9,
+                      timeAgo: "6h ago",
+                      category: "Web Dev",
+                      duration: "16 weeks"
+                    },
+                    {
+                      title: "Data Structures & Algorithms",
+                      student: "Maria Garcia",
+                      instructor: "Dr. David Kim",
+                      completionRate: 92,
+                      rating: 4.7,
+                      timeAgo: "8h ago",
+                      category: "Computer Science",
+                      duration: "10 weeks"
+                    }
+                  ].map((course, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 + index * 0.1 }}
+                      className="p-3 rounded-lg bg-retro-bg/50 border border-retro-text/10 hover:border-retro-accent/30 transition-colors cursor-pointer group"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-retro-primary/20 flex items-center justify-center flex-shrink-0">
+                          <BookOpen className="w-4 h-4 text-retro-primary" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="font-vt323 font-bold text-sm text-retro-text group-hover:text-retro-primary transition-colors">
+                              {course.title}
+                            </div>
+                            <Badge variant="secondary" className="text-xs">
+                              {course.category}
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-retro-text/70 mb-2">
+                            Completed by <span className="font-semibold">{course.student}</span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs">
+                            <div className="flex items-center gap-2 text-retro-text/60">
+                              <span>by {course.instructor}</span>
+                              <span>•</span>
+                              <span>{course.duration}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-retro-text/50">
+                              <div className="flex items-center gap-1">
+                                <Star className="w-3 h-3 text-yellow-400" />
+                                <span>{course.rating}</span>
+                              </div>
+                              <span>•</span>
+                              <span>{course.completionRate}%</span>
+                              <span>•</span>
+                              <span>{course.timeAgo}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  <Button variant="ghost" className="w-full font-vt323 text-sm hover:text-retro-primary mt-4">
+                    View All Courses <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+
+          {/* Quick Action Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="mt-8"
+          >
+            <Card className="retro-card">
+              <CardContent className="p-6">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                  <div className="text-center md:text-left">
+                    <h3 className="font-press-start text-lg text-retro-primary mb-2">
+                      Ready to Join the Action?
+                    </h3>
+                    <p className="font-vt323 text-retro-text/80">
+                      Create posts, unlock achievements, and complete courses to level up your profile
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <Link href="/news-feed">
+                      <Button className="retro-button">
+                        <MessageSquare className="w-4 h-4 mr-2" />
+                        Create Post
+                      </Button>
+                    </Link>
+                    <Link href="/courses">
+                      <Button variant="outline" className="retro-button-secondary">
+                        <BookOpen className="w-4 h-4 mr-2" />
+                        Browse Courses
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Main Features Grid */}
       <section className="py-8">
         <div className="container mx-auto px-4">
