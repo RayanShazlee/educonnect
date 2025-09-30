@@ -38,7 +38,7 @@ export default function RootLayout({
           <CourseProvider>
             <CourseManagementProvider>
               <MainNav />
-              <main className="container mx-auto px-4 py-6">
+              <main className="container mx-auto px-4 py-3">
                 <div className="retro-container">
                   {children}
                 </div>

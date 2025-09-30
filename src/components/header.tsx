@@ -85,12 +85,12 @@ export function Header() {
   }
 
   return (
-    <header className="border-b-2 border-[rgb(69,183,175)] bg-[rgb(42,54,59,0.95)] backdrop-blur-sm sticky top-0 z-50">
+    <header className="border-b-2 border-[var(--retro-primary)] bg-[var(--retro-bg)] backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="retro-title text-2xl hover:text-[rgb(255,230,109)] transition-colors">
-            EduConnect
+          <Link href="/" className="retro-title text-2xl">
+            🎮 EduConnect
           </Link>
 
           {/* Desktop Navigation */}
@@ -99,7 +99,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="nav-link hover:scale-105 transition-transform"
+                className="nav-link"
               >
                 {item.label}
               </Link>
@@ -127,10 +127,10 @@ export function Header() {
                         exit={{ opacity: 0, scale: 0.95, y: -20 }}
                         className="absolute right-0 mt-2 w-72"
                       >
-                        <div className="retro-card p-2">
+                        <div className="retro-card p-3">
                           <input
                             type="search"
-                            placeholder="Search..."
+                            placeholder="Search courses, communities..."
                             className="retro-input w-full"
                             autoFocus
                           />
@@ -150,26 +150,26 @@ export function Header() {
                       <User className="w-5 h-5" />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 mt-2 rounded-lg border-2 border-[rgb(69,183,175)] bg-[rgb(42,54,59,0.95)] backdrop-blur-sm">
-                    <DropdownMenuLabel className="text-[rgb(247,247,247)]">
+                  <DropdownMenuContent className="w-56 mt-2 rounded-lg border-2 border-[var(--retro-primary)] bg-[var(--retro-bg)] backdrop-blur-sm">
+                    <DropdownMenuLabel className="text-[var(--retro-text)]">
                       <div className="truncate">{userEmail}</div>
                     </DropdownMenuLabel>
-                    <DropdownMenuSeparator className="border-[rgb(69,183,175)]" />
-                    <DropdownMenuItem className="text-[rgb(247,247,247)] hover:bg-[rgb(255,107,107,0.1)] cursor-pointer">
+                    <DropdownMenuSeparator className="border-[var(--retro-primary)]" />
+                    <DropdownMenuItem className="text-[var(--retro-text)] hover:bg-[var(--retro-accent)]/10 cursor-pointer">
                       <Link href="/profile" className="flex items-center w-full">
                         <User className="mr-2 h-4 w-4" />
                         <span>Profile</span>
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-[rgb(247,247,247)] hover:bg-[rgb(255,107,107,0.1)] cursor-pointer">
+                    <DropdownMenuItem className="text-[var(--retro-text)] hover:bg-[var(--retro-accent)]/10 cursor-pointer">
                       <Link href="/settings" className="flex items-center w-full">
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Settings</span>
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator className="border-[rgb(69,183,175)]" />
+                    <DropdownMenuSeparator className="border-[var(--retro-primary)]" />
                     <DropdownMenuItem 
-                      className="text-[rgb(247,247,247)] hover:bg-[rgb(255,107,107,0.1)] cursor-pointer"
+                      className="text-[var(--retro-text)] hover:bg-[var(--retro-accent)]/10 cursor-pointer"
                       onClick={handleLogout}
                     >
                       <div className="flex items-center w-full">
@@ -181,10 +181,10 @@ export function Header() {
                 </DropdownMenu>
               </>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <Link href="/sign-in">
                   <motion.button
-                    className="retro-button"
+                    className="retro-button-secondary px-6 py-2"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -193,7 +193,7 @@ export function Header() {
                 </Link>
                 <Link href="/sign-up">
                   <motion.button
-                    className="retro-button"
+                    className="retro-button px-6 py-2"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -231,7 +231,7 @@ export function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="nav-link block hover:translate-x-2 transition-transform"
+                    className="nav-link block"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}

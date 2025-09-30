@@ -56,7 +56,7 @@
 @layer components {
   /* Base container for all major sections */
   .retro-container {
-    @apply p-6 border-2 border-[var(--retro-primary)] rounded-lg bg-[var(--retro-bg)] shadow-lg;
+    @apply p-4 border-2 border-[var(--retro-primary)] rounded-lg bg-[var(--retro-bg)] shadow-lg;
   }
 
   /* Navigation bar */
@@ -76,8 +76,11 @@
 
   /* Secondary buttons */
   .retro-button-secondary {
-    @apply px-4 py-2 border-2 border-[var(--retro-primary)] text-[var(--retro-primary)] font-vt323 text-xl rounded-md 
-    hover:bg-[var(--retro-primary)] hover:text-[var(--retro-bg)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-[var(--retro-primary)] text-white px-4 py-2 border-2 border-[var(--retro-primary)] font-vt323 text-xl rounded-md 
+    shadow-[4px_4px_0px_0px_var(--retro-primary)]
+    hover:bg-[var(--retro-accent)] hover:border-[var(--retro-accent)] hover:shadow-[2px_2px_0px_0px_var(--retro-accent)]
+    hover:translate-x-[2px] hover:translate-y-[2px]
+    transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   /* Input fields */
@@ -100,6 +103,35 @@
   .retro-link {
     @apply text-[var(--retro-text)] opacity-80 hover:text-[var(--retro-accent)] 
     transition-colors font-vt323 text-xl;
+  }
+
+  /* Navigation links */
+  .nav-link {
+    @apply text-[var(--retro-text)] font-vt323 text-lg px-4 py-2 rounded-md border-2 border-transparent transition-all duration-200 uppercase tracking-wider
+    hover:border-[var(--retro-primary)] hover:bg-[var(--retro-primary)] hover:bg-opacity-10
+    hover:text-[var(--retro-accent)] hover:translate-x-[2px] hover:translate-y-[2px];
+    box-shadow: 2px 2px 0px 0px transparent;
+  }
+
+  .nav-link:hover {
+    box-shadow: 4px 4px 0px 0px var(--retro-primary);
+  }
+
+  /* Main title/logo */
+  .retro-title {
+    @apply font-press-start text-[var(--retro-primary)] hover:text-[var(--retro-accent)] transition-all duration-200 uppercase tracking-wider;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+    border: 2px solid transparent;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 0px 0px transparent;
+  }
+
+  .retro-title:hover {
+    border-color: var(--retro-primary);
+    background-color: rgba(69,183,175, 0.1);
+    box-shadow: 4px 4px 0px 0px var(--retro-primary);
+    transform: translate(2px, 2px);
   }
 
   /* Headers */

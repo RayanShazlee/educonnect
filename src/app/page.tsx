@@ -5,6 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { RetroIcon } from "@/components/ui/retro-icon"
 import { RetroSectionLogo } from "@/components/ui/retro-section-logo"
+import { RetroStatIcon } from "@/components/ui/retro-stat-icon"
+import { RetroTopicIcon } from "@/components/ui/retro-topic-icon"
+import { RetroAchievementIcon } from "@/components/ui/retro-achievement-icon"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { useAuth } from "@/lib/auth-context"
@@ -112,10 +115,10 @@ const heroFeatures = [
 ]
 
 const quickStats = [
-  { label: "Active Learners", value: "12.4K", trend: "+15%", icon: <Users className="w-4 h-4" /> },
-  { label: "Courses Completed", value: "3.2K", trend: "+23%", icon: <BookOpen className="w-4 h-4" /> },
-  { label: "Achievements Earned", value: "8.7K", trend: "+18%", icon: <Trophy className="w-4 h-4" /> },
-  { label: "Community Posts", value: "45.6K", trend: "+12%", icon: <MessageSquare className="w-4 h-4" /> }
+  { label: "Active Learners", value: "12.4K", trend: "+15%", icon: <RetroStatIcon type="learners" size="sm" /> },
+  { label: "Courses Completed", value: "3.2K", trend: "+23%", icon: <RetroStatIcon type="courses" size="sm" /> },
+  { label: "Achievements Earned", value: "8.7K", trend: "+18%", icon: <RetroStatIcon type="achievements" size="sm" /> },
+  { label: "Community Posts", value: "45.6K", trend: "+12%", icon: <RetroStatIcon type="posts" size="sm" /> }
 ]
 
 const quickActions = [
@@ -150,7 +153,9 @@ const featuredContent: FeaturedSection[] = [
       { name: "Machine Learning", posts: 234, growth: "+15%" },
       { name: "React Development", posts: 189, growth: "+23%" },
       { name: "Data Science", posts: 156, growth: "+12%" },
-      { name: "UI/UX Design", posts: 143, growth: "+18%" }
+      { name: "UI/UX Design", posts: 143, growth: "+18%" },
+      { name: "AI/ML", posts: 98, growth: "+25%" },
+      { name: "Mobile Development", posts: 87, growth: "+20%" }
     ]
   },
   {
@@ -160,7 +165,9 @@ const featuredContent: FeaturedSection[] = [
       { name: "Algorithm Master", user: "Alex Chen", rarity: "Legendary" },
       { name: "Code Mentor", user: "Sarah Johnson", rarity: "Epic" },
       { name: "Community Helper", user: "Mike Wilson", rarity: "Rare" },
-      { name: "First Course", user: "David Park", rarity: "Common" }
+      { name: "First Course", user: "David Park", rarity: "Common" },
+      { name: "Speed Learner", user: "Emma Davis", rarity: "Rare" },
+      { name: "Course Master", user: "John Smith", rarity: "Legendary" }
     ]
   }
 ]
@@ -169,25 +176,25 @@ export default function Home() {
   const { user, isAuthenticated } = useAuth()
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen space-y-8">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20">
+      <section className="py-8">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-8"
           >
-            <h1 className="font-press-start text-4xl md:text-6xl mb-6 text-retro-primary">
-              Welcome to EduConnect
+            <h1 className="font-press-start text-4xl md:text-6xl mb-4 text-retro-primary">
+              🎮 EduConnect
             </h1>
-            <p className="font-vt323 text-xl md:text-2xl text-retro-text/80 max-w-3xl mx-auto mb-8">
+            <p className="font-vt323 text-xl md:text-2xl text-retro-text/80 max-w-3xl mx-auto mb-6">
               The ultimate retro-themed educational platform where learning meets gaming. 
               Connect with peers, unlock achievements, and level up your skills!
             </p>
             {!isAuthenticated && (
-              <div className="flex gap-4 justify-center">
+              <div className="flex gap-4 justify-center mb-6">
                 <Link href="/sign-up">
                   <Button className="retro-button text-lg px-8 py-4">
                     <Rocket className="w-5 h-5 mr-2" />
@@ -209,18 +216,18 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
           >
             {quickStats.map((stat, index) => (
               <Card key={stat.label} className="retro-card text-center">
                 <CardContent className="p-4">
-                  <div className="flex items-center justify-center mb-2">
+                  <div className="flex items-center justify-center mb-3">
                     {stat.icon}
                   </div>
-                  <div className="font-press-start text-2xl text-retro-primary mb-1">
+                  <div className="font-press-start text-2xl text-retro-primary mb-2">
                     {stat.value}
                   </div>
-                  <div className="font-vt323 text-sm text-retro-text/60 mb-1">
+                  <div className="font-vt323 text-sm text-retro-text/60 mb-2">
                     {stat.label}
                   </div>
                   <Badge variant="secondary" className="text-xs">
@@ -234,18 +241,18 @@ export default function Home() {
       </section>
 
       {/* Main Features Grid */}
-      <section className="py-16">
+      <section className="py-8">
         <div className="container mx-auto px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-press-start text-3xl text-center mb-12 text-retro-primary"
+            className="font-press-start text-2xl text-center mb-6 text-retro-primary"
           >
             Explore EduConnect
           </motion.h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {heroFeatures.map((feature, index) => (
               <motion.div
                 key={feature.id}
@@ -289,72 +296,340 @@ export default function Home() {
       </section>
 
       {/* Platform Features Showcase */}
-      <section className="py-16 bg-retro-bg/50">
+      <section className="py-8 bg-retro-bg/30">
         <div className="container mx-auto px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-press-start text-3xl text-center mb-4 text-retro-primary"
+            className="font-press-start text-2xl text-center mb-3 text-retro-primary"
           >
-            Platform Features
+            🎯 Platform Features
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-vt323 text-xl text-center mb-12 text-retro-text/80 max-w-2xl mx-auto"
+            className="font-vt323 text-lg text-center mb-8 text-retro-text/80 max-w-2xl mx-auto"
           >
             Discover all the powerful tools and features available on EduConnect
           </motion.p>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {[
-              { id: 'dashboard', title: 'Dashboard', link: '/dashboard' },
-              { id: 'profile', title: 'Profile', link: '/profile' },
-              { id: 'newsfeed', title: 'News Feed', link: '/news-feed' },
-              { id: 'courses', title: 'Courses', link: '/courses' },
-              { id: 'communities', title: 'Communities', link: '/communities' },
-              { id: 'achievements', title: 'Achievements', link: '/achievements' },
-              { id: 'resume', title: 'Resume Builder', link: '/resume' },
-              { id: 'wishlist', title: 'Wishlist', link: '/wishlist' },
-              { id: 'settings', title: 'Settings', link: '/settings' },
-            ].map((feature, index) => (
-              <motion.div
-                key={feature.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="group"
-              >
-                <Link href={feature.link}>
-                  <Card className="retro-card text-center hover:border-retro-accent transition-all duration-300 cursor-pointer">
-                    <CardContent className="p-6">
-                      <div className="mb-4 flex justify-center">
-                        <RetroSectionLogo 
-                          sectionId={feature.id} 
-                          size="md" 
-                          animated={true}
-                          withGlow={true}
-                        />
+          {/* Enhanced Feature Categories */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* Professional Tools */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-4"
+            >
+              <h3 className="font-press-start text-lg text-retro-primary mb-4 flex items-center gap-2">
+                <span>💼</span> Professional Tools
+              </h3>
+              <div className="space-y-3">
+                <Link href="/resume">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-retro-primary/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="resume" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            Resume Builder
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Create professional resumes with multiple templates and export options
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded font-vt323">PDF Export</span>
+                            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded font-vt323">Templates</span>
+                          </div>
+                        </div>
                       </div>
-                      <h3 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors">
-                        {feature.title}
-                      </h3>
                     </CardContent>
                   </Card>
                 </Link>
-              </motion.div>
-            ))}
+
+                <Link href="/dashboard">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="dashboard" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            Dashboard
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Manage courses, track progress, and view analytics
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded font-vt323">Analytics</span>
+                            <span className="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded font-vt323">Progress</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Learning & Community */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="space-y-4"
+            >
+              <h3 className="font-press-start text-lg text-retro-primary mb-4 flex items-center gap-2">
+                <span>📚</span> Learning & Community
+              </h3>
+              <div className="space-y-3">
+                <Link href="/courses">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="courses" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            Courses
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Browse 156+ courses across multiple skill levels
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded font-vt323">156 Courses</span>
+                            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded font-vt323">Certificates</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                <Link href="/communities">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="communities" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            Communities
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Join 89 active communities and collaborate with peers
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded font-vt323">89 Communities</span>
+                            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded font-vt323">Live Chat</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                <Link href="/news-feed">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="newsfeed" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            News Feed
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Stay updated with 234+ active posts and discussions
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded font-vt323">234 Posts</span>
+                            <span className="text-xs bg-pink-500/20 text-pink-400 px-2 py-1 rounded font-vt323">Real-time</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Personal & Settings */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="space-y-4"
+            >
+              <h3 className="font-press-start text-lg text-retro-primary mb-4 flex items-center gap-2">
+                <span>⚙️</span> Personal & Settings
+              </h3>
+              <div className="space-y-3">
+                <Link href="/profile">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="profile" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            Profile
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Manage your profile, view stats and achievements
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded font-vt323">Stats</span>
+                            <span className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded font-vt323">Achievements</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                <Link href="/achievements">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="achievements" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            Achievements
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Unlock badges, trophies and track your milestones
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded font-vt323">Badges</span>
+                            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded font-vt323">Trophies</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                <Link href="/settings">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-gray-500/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="settings" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            Settings
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Customize preferences, privacy and notifications
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-gray-500/20 text-gray-400 px-2 py-1 rounded font-vt323">Privacy</span>
+                            <span className="text-xs bg-indigo-500/20 text-indigo-400 px-2 py-1 rounded font-vt323">Themes</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+
+                <Link href="/wishlist">
+                  <Card className="retro-card group cursor-pointer hover:border-retro-accent transition-all duration-300">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center">
+                          <RetroSectionLogo sectionId="wishlist" size="sm" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-press-start text-sm text-retro-text group-hover:text-retro-primary transition-colors mb-1">
+                            Wishlist
+                          </h4>
+                          <p className="font-vt323 text-xs text-retro-text/70">
+                            Save courses and content for later access
+                          </p>
+                          <div className="flex gap-2 mt-2">
+                            <span className="text-xs bg-pink-500/20 text-pink-400 px-2 py-1 rounded font-vt323">Saved</span>
+                            <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded font-vt323">Quick Access</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            </motion.div>
           </div>
+
+          {/* Quick Access Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <h3 className="font-press-start text-lg text-center mb-4 text-retro-text/80">
+              🚀 Quick Access
+            </h3>
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              {[
+                { id: 'dashboard', title: 'Dashboard', link: '/dashboard', color: 'bg-blue-500/10' },
+                { id: 'profile', title: 'Profile', link: '/profile', color: 'bg-yellow-500/10' },
+                { id: 'newsfeed', title: 'News Feed', link: '/news-feed', color: 'bg-cyan-500/10' },
+                { id: 'courses', title: 'Courses', link: '/courses', color: 'bg-green-500/10' },
+                { id: 'communities', title: 'Communities', link: '/communities', color: 'bg-purple-500/10' },
+                { id: 'achievements', title: 'Achievements', link: '/achievements', color: 'bg-red-500/10' },
+                { id: 'resume', title: 'Resume', link: '/resume', color: 'bg-orange-500/10' },
+                { id: 'wishlist', title: 'Wishlist', link: '/wishlist', color: 'bg-pink-500/10' },
+                { id: 'settings', title: 'Settings', link: '/settings', color: 'bg-gray-500/10' },
+              ].map((feature, index) => (
+                <motion.div
+                  key={feature.id}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05, duration: 0.4 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="group"
+                >
+                  <Link href={feature.link}>
+                    <Card className={`retro-card text-center hover:border-retro-accent transition-all duration-300 cursor-pointer ${feature.color}`}>
+                      <CardContent className="p-3">
+                        <div className="mb-2 flex justify-center">
+                          <RetroSectionLogo 
+                            sectionId={feature.id} 
+                            size="sm" 
+                            animated={true}
+                            withGlow={true}
+                          />
+                        </div>
+                        <h3 className="font-press-start text-xs text-retro-text group-hover:text-retro-primary transition-colors text-center">
+                          {feature.title}
+                        </h3>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Two Column Layout */}
-      <section className="py-16">
+      <section className="py-8">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* Left Column - Quick Actions */}
             <div className="lg:col-span-1">
@@ -363,14 +638,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <Card className="retro-card mb-8">
-                  <CardHeader>
-                    <CardTitle className="font-press-start text-retro-primary flex items-center gap-2">
-                      <Zap className="w-5 h-5" />
+                <Card className="retro-card mb-6">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="font-press-start text-retro-primary flex items-center gap-2 text-sm">
+                      <Zap className="w-4 h-4" />
                       Quick Actions
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-3">
                     {quickActions.map((action, index) => (
                       <motion.div
                         key={action.title}
@@ -378,20 +653,20 @@ export default function Home() {
                         whileTap={{ scale: 0.98 }}
                       >
                         <Link href={action.link}>
-                          <div className={`p-4 rounded-lg ${action.color} border border-retro-text/10 hover:border-retro-primary/50 transition-all cursor-pointer group`}>
+                          <div className={`p-3 rounded-lg ${action.color} border border-retro-text/10 hover:border-retro-primary/50 transition-all cursor-pointer group`}>
                             <div className="flex items-center gap-3">
                               <div className="flex-shrink-0">
                                 {action.icon}
                               </div>
                               <div className="flex-1">
-                                <div className="font-vt323 font-bold text-retro-text group-hover:text-retro-primary transition-colors">
+                                <div className="font-vt323 font-bold text-retro-text group-hover:text-retro-primary transition-colors text-sm">
                                   {action.title}
                                 </div>
-                                <div className="text-sm text-retro-text/60">
+                                <div className="text-xs text-retro-text/60">
                                   {action.description}
                                 </div>
                               </div>
-                              <ArrowRight className="w-4 h-4 text-retro-text/40 group-hover:text-retro-primary group-hover:translate-x-1 transition-all" />
+                              <ArrowRight className="w-3 h-3 text-retro-text/40 group-hover:text-retro-primary group-hover:translate-x-1 transition-all" />
                             </div>
                           </div>
                         </Link>
@@ -466,9 +741,7 @@ export default function Home() {
                             section.items.map((item, itemIndex) => (
                               <div key={itemIndex} className="flex items-center justify-between p-3 rounded-lg bg-retro-bg/30 border border-retro-text/10">
                                 <div className="flex items-center gap-3">
-                                  <div className="w-8 h-8 rounded bg-retro-primary/20 flex items-center justify-center">
-                                    <TrendingUp className="w-4 h-4" />
-                                  </div>
+                                  <RetroTopicIcon topic={item.name} size="sm" />
                                   <div>
                                     <div className="font-vt323 font-bold text-retro-text">
                                       {item.name}
@@ -487,8 +760,8 @@ export default function Home() {
                             section.items.map((item, itemIndex) => (
                               <div key={itemIndex} className="flex items-center justify-between p-3 rounded-lg bg-retro-bg/30 border border-retro-text/10">
                                 <div className="flex items-center gap-3">
-                                  <RetroIcon
-                                    icon={<Trophy className="w-full h-full" />}
+                                  <RetroAchievementIcon
+                                    achievementName={item.name}
                                     rarity={item.rarity}
                                     size="sm"
                                   />

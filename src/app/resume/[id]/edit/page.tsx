@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
@@ -13,6 +13,7 @@ import { AddEducationDialog } from "@/components/dialogs/add-education-dialog"
 import { SkillsManager } from "@/components/resume/skills-manager"
 import { ResumePreview } from "@/components/resume/resume-preview"
 import { ResumeExport } from "@/components/resume/resume-export"
+import { Edit, Trash2, Save, Eye, Briefcase, GraduationCap } from "lucide-react"
 import { type Resume, type Skill, type WorkExperience, type Education } from "@/lib/types"
 
 // Mock data for development - Replace with actual data fetching
@@ -63,6 +64,8 @@ const MOCK_RESUME: Resume = {
 
 export default function ResumeEditorPage({ params }: { params: { id: string } }) {
   const [resume, setResume] = useState<Resume>(MOCK_RESUME)
+  const [isSaving, setIsSaving] = useState(false)
+  const [lastSaved, setLastSaved] = useState<Date>(new Date())
 
   const handleBasicInfoChange = (field: keyof Pick<Resume, 'title' | 'objective'>) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -72,6 +75,7 @@ export default function ResumeEditorPage({ params }: { params: { id: string } })
       [field]: e.target.value,
       updatedAt: new Date()
     }))
+    handleAutoSave()
   }
 
   const handleExperienceAdd = (experience: Omit<WorkExperience, 'id'>) => {
@@ -80,6 +84,27 @@ export default function ResumeEditorPage({ params }: { params: { id: string } })
       experience: [...prev.experience, { ...experience, id: crypto.randomUUID() }],
       updatedAt: new Date()
     }))
+    handleAutoSave()
+  }
+
+  const handleExperienceEdit = (id: string, experience: Partial<WorkExperience>) => {
+    setResume(prev => ({
+      ...prev,
+      experience: prev.experience.map(exp => 
+        exp.id === id ? { ...exp, ...experience } : exp
+      ),
+      updatedAt: new Date()
+    }))
+    handleAutoSave()
+  }
+
+  const handleExperienceDelete = (id: string) => {
+    setResume(prev => ({
+      ...prev,
+      experience: prev.experience.filter(exp => exp.id !== id),
+      updatedAt: new Date()
+    }))
+    handleAutoSave()
   }
 
   const handleEducationAdd = (education: Omit<Education, 'id'>) => {
@@ -88,6 +113,27 @@ export default function ResumeEditorPage({ params }: { params: { id: string } })
       education: [...prev.education, { ...education, id: crypto.randomUUID() }],
       updatedAt: new Date()
     }))
+    handleAutoSave()
+  }
+
+  const handleEducationEdit = (id: string, education: Partial<Education>) => {
+    setResume(prev => ({
+      ...prev,
+      education: prev.education.map(edu => 
+        edu.id === id ? { ...edu, ...education } : edu
+      ),
+      updatedAt: new Date()
+    }))
+    handleAutoSave()
+  }
+
+  const handleEducationDelete = (id: string) => {
+    setResume(prev => ({
+      ...prev,
+      education: prev.education.filter(edu => edu.id !== id),
+      updatedAt: new Date()
+    }))
+    handleAutoSave()
   }
 
   const handleSkillsChange = (skills: Skill[]) => {
@@ -96,6 +142,33 @@ export default function ResumeEditorPage({ params }: { params: { id: string } })
       skills,
       updatedAt: new Date()
     }))
+    handleAutoSave()
+  }
+
+  const handleAutoSave = async () => {
+    setIsSaving(true)
+    try {
+      // Simulate API save
+      await new Promise(resolve => setTimeout(resolve, 500))
+      setLastSaved(new Date())
+    } catch (error) {
+      console.error('Auto-save failed:', error)
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const getCompletionRate = () => {
+    let completed = 0
+    let total = 5 // Basic sections
+
+    if (resume.title.trim()) completed++
+    if (resume.objective && resume.objective.trim()) completed++
+    if (resume.experience.length > 0) completed++
+    if (resume.education.length > 0) completed++
+    if (resume.skills.length > 0) completed++
+
+    return Math.round((completed / total) * 100)
   }
 
   const handleSave = async () => {
